@@ -1,6 +1,5 @@
 import { Fragment } from "react";
-import { useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import QuoteItem from "./QuoteItem";
 import classes from "./QuoteList.module.css";
@@ -25,9 +24,18 @@ const QuoteList = (props) => {
   const sortedQuotes = sortQuotes(props.quotes, isSortingAscending);
 
   const changeSortingHandler = () => {
+    // alternative to just string approach
+    history.push({
+      pathname: location.pathname,
+      search: `?sort=${isSortingAscending ? "desc" : "asc"}`,
+    });
     // history.replace will replace the page, user cannot go back to previous page
     // but history.push will push a new page on top of previous page, use can go back
-    history.push("/quotes?sort=" + (isSortingAscending ? "desc" : "asc"));
+
+    // previous string approach
+    // history.push(
+    //   `${location.pathname}?sort=${isSortingAscending ? "desc" : "asc"}`
+    // );
   };
 
   return (
